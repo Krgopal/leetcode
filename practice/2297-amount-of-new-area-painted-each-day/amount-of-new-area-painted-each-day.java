@@ -1,5 +1,5 @@
 class Solution {
-    public int[] amountPainted(int[][] paint) {
+    public int[] amountPainted1(int[][] paint) {
         TreeMap<Integer, Integer> map = new TreeMap<>();
         int[] result = new int[paint.length];
         int index = 0;
@@ -27,5 +27,29 @@ class Solution {
             result[index++] = diff;
         }
         return result;
+    }
+
+    public int[] amountPainted(int[][] paint) {
+        int n = paint.length;
+        int[] ans = new int[n];
+        int max = paint[0][1];
+        for (int[] p : paint) {
+            max = Math.max(max, p[1]);
+        }
+        int i=0;
+        int[] line = new int[max + 1];
+        for (int[] p : paint) {
+            int start = p[0];
+            int end = p[1];
+            int amount = 0;
+            while (start < end) {
+                int nextJump = Math.max(start + 1, line[start]);
+                amount += line[start] == 0 ? 1 : 0;
+                line[start] = Math.max(line[start], end);
+                start = nextJump;
+            }
+            ans[i++] = amount;
+        }
+        return ans;
     }
 }
