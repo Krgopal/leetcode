@@ -2,17 +2,23 @@
       boolean knows(int a, int b); */
 
 public class Solution extends Relation {
+    private int numberOfPeople;
     public int findCelebrity(int n) {
+        numberOfPeople = n;
+        int celebrityCandidate =0;
         for (int i=0; i<n; i++) {
-            if (isCelebrity(i, n)) {
-                return i;
+            if (knows(celebrityCandidate, i)) {
+                celebrityCandidate = i;
             }
+        }
+        if (isCelebrity(celebrityCandidate)) {
+            return celebrityCandidate;
         }
         return -1;
     }
 
-    public boolean isCelebrity(int i, int n) {
-        for (int j=0; j<n; j++) {
+    public boolean isCelebrity(int i) {
+        for (int j=0; j<numberOfPeople; j++) {
             if (i == j) {
                 continue;
             }
