@@ -24,7 +24,7 @@ class Solution {
                 i++;
             }
             if (!blockActive && builder.length() > 0) {
-                result.add(new String(builder));
+                result.add(builder.toString());
             }
             
         }
