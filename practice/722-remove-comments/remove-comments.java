@@ -1,32 +1,31 @@
 class Solution {
     public List<String> removeComments(String[] source) {
-        boolean blockActive = false;
+        boolean inBlock = false;
         List<String> result = new ArrayList<>();
         StringBuilder builder = new StringBuilder();
-        for (String line : source) {
-            int i=0;
-            char[] chars = line.toCharArray();
-            if (!blockActive) {
+        for (String line :source) {
+            if (!inBlock) {
                 builder = new StringBuilder();
             }
-            while (i<line.length()) {
-                if (!blockActive && i +1 < line.length() && chars[i] == '/' && chars[i+1] == '*') {
-                    blockActive = true;
+            char[] chars = line.toCharArray();
+            int i=0;
+            while (i <line.length()) {
+                if (!inBlock && i+1 < line.length() && chars[i] == '/' && chars[i+1] == '*') {
+                    inBlock = true;
                     i++;
-                } else if (blockActive && i+1 < line.length() && chars[i] == '*' && chars[i+1] == '/') {
-                    blockActive = false;
+                } else if (inBlock && i+1 < line.length() && chars[i] == '*' && chars[i+1] == '/') {
+                    inBlock = false;
                     i++;
-                } else if (!blockActive && i+1 < line.length() && chars[i] == '/' && chars[i+1] == '/') {
+                } else if (!inBlock && i+1 < line.length() && chars[i] == '/' && chars[i+1] == '/') {
                     break;
-                } else if (!blockActive) {
+                } else if (!inBlock) {
                     builder.append(chars[i]);
                 }
                 i++;
             }
-            if (!blockActive && builder.length() > 0) {
+            if (!inBlock && builder.length() > 0) {
                 result.add(builder.toString());
             }
-            
         }
         return result;
     }
